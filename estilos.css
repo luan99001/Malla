@@ -1,0 +1,23 @@
+.curso {
+  border: 2px solid #f06292;
+  border-radius: 8px;
+  margin: 8px 0;
+  padding: 10px;
+  transition: background 0.3s, opacity 0.3s;
+}
+
+.curso.bloqueado {
+  background: #fce4ec; /* Rosa claro bloqueado */
+  opacity: 0.5;
+}
+
+.curso:not(.bloqueado) {
+  background: #f06292; /* Rosa fuerte */
+  color: #fff;
+}
+
+.curso.completado {
+  background: #7b1fa2 !important; /* Morado */
+  border-color: #7b1fa2;
+  color: #fff;
+}
