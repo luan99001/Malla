@@ -38,13 +38,12 @@ const requisitos = {
 
 document.querySelectorAll('.curso input[type="checkbox"]').forEach(checkbox => {
   checkbox.addEventListener('change', function () {
-    const cursoDiv = this.closest('.curso');
-    const cursoId = cursoDiv.dataset.id;
+    const cursoId = this.closest('.curso').dataset.id;
 
     if (this.checked) {
-      cursoDiv.classList.add('completado');
+      this.closest('.curso').classList.add('completado');
     } else {
-      cursoDiv.classList.remove('completado');
+      this.closest('.curso').classList.remove('completado');
     }
 
     saveProgress();
@@ -52,6 +51,7 @@ document.querySelectorAll('.curso input[type="checkbox"]').forEach(checkbox => {
   });
 });
 
+// Desbloquea cursos dependientes si todos los requisitos están listos
 function desbloquearCursosDependientes(cursoAprobado) {
   for (const [curso, prereqs] of Object.entries(requisitos)) {
     if (prereqs.includes(cursoAprobado)) {
@@ -95,7 +95,7 @@ function loadProgress() {
     }
   }
 
-  // Vuelve a verificar desbloqueos en cascada
+  // Vuelve a verificar desbloqueos
   for (const id of Object.keys(progreso)) {
     if (progreso[id]) {
       desbloquearCursosDependientes(id);
