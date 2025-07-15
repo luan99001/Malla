@@ -36,7 +36,6 @@ const requisitos = {
   practicas: ["innovation"]
 };
 
-// Aplica listener a cada checkbox
 document.querySelectorAll('.curso input[type="checkbox"]').forEach(checkbox => {
   checkbox.addEventListener('change', function () {
     const cursoDiv = this.closest('.curso');
@@ -53,7 +52,6 @@ document.querySelectorAll('.curso input[type="checkbox"]').forEach(checkbox => {
   });
 });
 
-// Desbloquea cursos dependientes si todos los requisitos están aprobados
 function desbloquearCursosDependientes(cursoAprobado) {
   for (const [curso, prereqs] of Object.entries(requisitos)) {
     if (prereqs.includes(cursoAprobado)) {
@@ -72,7 +70,7 @@ function desbloquearCursosDependientes(cursoAprobado) {
   }
 }
 
-// Guarda en localStorage
+// Guarda progreso en localStorage
 function saveProgress() {
   const progreso = {};
   document.querySelectorAll('.curso').forEach(curso => {
@@ -83,13 +81,13 @@ function saveProgress() {
   localStorage.setItem('mallaProgreso', JSON.stringify(progreso));
 }
 
-// Carga desde localStorage
+// Carga progreso desde localStorage
 function loadProgress() {
   const progreso = JSON.parse(localStorage.getItem('mallaProgreso')) || {};
   for (const [id, checked] of Object.entries(progreso)) {
     const cursoDiv = document.querySelector(`.curso[data-id="${id}"]`);
     if (cursoDiv) {
-      const input = cursoDiv.querySelector('input[type="checkbox"]`);
+      const input = cursoDiv.querySelector('input[type="checkbox"]');
       input.checked = checked;
       if (checked) {
         cursoDiv.classList.add('completado');
@@ -97,7 +95,7 @@ function loadProgress() {
     }
   }
 
-  // Desbloquea todos dependientes en cadena
+  // Vuelve a verificar desbloqueos en cascada
   for (const id of Object.keys(progreso)) {
     if (progreso[id]) {
       desbloquearCursosDependientes(id);
